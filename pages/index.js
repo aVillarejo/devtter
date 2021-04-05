@@ -1,83 +1,70 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import { useEffect, useState } from 'react';
+import AppLayout from '../components/AppLayout';
 import styled from 'styled-components';
+import GithubButton from '../components/Button/SocialButton';
 
-const Title = styled.h1`
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  color: ${({ theme }) => theme.colors.primary};
+import { loginWithGithub, onAuthStateChanged } from '../firebase/client';
 
-  /* a {
-    color: #0070f3;
-    text-decoration: none;
-  }*/
-  a:hover,
-  a:focus,
-  a:active {
-    text-decoration: underline;
-  }
-`;
+export default function Index() {
+  const [user, setUser] = useState(undefined);
 
-export default function Home() {
+  useEffect(() => {
+    onAuthStateChanged(setUser);
+  }, []);
+
+  const handleClick = () => {
+    loginWithGithub().then((usr) => {
+        setUser(usr);
+      }).catch((err) => {
+        console.log(err);
+      });
+  };
+  
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
-      <main className={styles.main}>
-        <Title className={styles.title}>
-          Welcome to <a href='https://nextjs.org'>Next.js!</a>
-        </Title>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href='https://nextjs.org/docs' className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href='https://nextjs.org/learn' className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href='https://github.com/vercel/next.js/tree/master/examples'
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href='https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Powered by{' '}
-          <img src='/vercel.svg' alt='Vercel Logo' className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+    <AppLayout>
+      <Section>
+        <Logo src='/devter-logo.png' alt='nav-logo' />
+        <Title>Devtter</Title>
+        <Subitle>
+          <span>Talk about development</span>
+          <span>with developers👨‍💻 👩‍💻</span>
+        </Subitle>
+        {
+          !user && 
+          <GithubButton onClick={handleClick}>
+              Login with Github
+          </GithubButton>
+        }
+        {
+          user && user.avatar && <div>
+            <Logo src={user.avatar} />
+            <strong>{user.username}</strong>
+          </div>
+        }
+      </Section>
+    </AppLayout>
   );
 }
+// https://100dayscss.com/?dayIndex=1
+// https://www.frontendmentor.io/challenges
+const Title = styled.h1`
+  color: ${({ theme }) => theme.colors.secundary};
+  font-weight: 800;
+  margin-bottom: 16px;
+`;
+const Subitle = styled.h2`
+  font-size: 21px;
+  color: ${({ theme }) => theme.colors.primary};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const Logo = styled.img`
+  width: 120px;
+`;
+const Section = styled.section`
+  display: grid;
+  height: 100%;
+  place-content: center;
+  place-items: center;
+`;
