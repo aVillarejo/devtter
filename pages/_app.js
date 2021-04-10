@@ -1,5 +1,5 @@
-import { ThemeProvider } from 'styled-components';
-import { GlobalStyle, theme } from '../styles';
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyle, theme } from '../styles'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </ThemeProvider>
     </>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp

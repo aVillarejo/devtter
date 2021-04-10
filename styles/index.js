@@ -1,11 +1,13 @@
-import { createGlobalStyle } from 'styled-components';
-import { addOpacityToColor } from './utils';
+import { createGlobalStyle } from 'styled-components'
+import { addOpacityToColor } from './utils'
 
 export const fonts = {
   base:
     'system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
-};
-
+}
+export const breakPoints = {
+  mobile: '520px',
+}
 export const theme = {
   colors: {
     primary: 'var(--primary)',
@@ -13,11 +15,8 @@ export const theme = {
     black: 'var(--black)',
     white: 'var(--white)',
   },
-  breakPoints: {
-    mobile: '480px',
-  },
-};
-const backgroundColor = addOpacityToColor('#0099FF', 0.3);
+}
+const backgroundColor = addOpacityToColor('#0099FF', 0.3)
 
 export const GlobalStyle = createGlobalStyle`
 :root{
@@ -49,7 +48,7 @@ body {
   padding: 0;
   margin: 0;
   font-family:${fonts.base};
-  ${'' /* font-size:16px; */}
+  font-size:16px;
 }
 
 a {
@@ -61,4 +60,4 @@ a {
   box-sizing: border-box;
 }
 
-`;
+`

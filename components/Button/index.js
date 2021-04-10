@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledButton = styled.button`
   align-items: center;
@@ -15,11 +15,11 @@ const StyledButton = styled.button`
   &:hover {
     opacity: 0.7;
   }
-`;
+`
 
-const Button = (props) => {
-  const children = props.children;
-  return <StyledButton {...props}>{children}</StyledButton>;
-};
+const Button = props => {
+  const children = props.children
+  return <StyledButton {...props}>{children}</StyledButton>
+}
 
-export default Button;
+export default Button
